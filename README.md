@@ -1,22 +1,44 @@
 # @molcrafts/ui — shared shadcn registry for MolCrafts
 
-**Source of truth** for design tokens and shadcn-style React primitives shared by
-**molexp**, **molvis**, and **molhub**.
+**Source of truth** for the MolCrafts visual constitution and shadcn-style React
+primitives shared by **molexp**, **molvis**, and **molhub**.
 
-This is **not** a traditional opaque npm component library as the only
-distribution path. Following [shadcn registry](https://ui.shadcn.com/docs/registry):
+This is **not** only an opaque npm component library. Following
+[shadcn registry](https://ui.shadcn.com/docs/registry):
 
 1. Author components here as source.
-2. `pnpm build:registry` → static JSON under `public/r/`.
+2. `npm run build:registry` → static JSON under `public/r/`.
 3. Product apps install with:
 
 ```bash
 npx shadcn@latest add @molcrafts/button
 ```
 
-Optional npm package `@molcrafts/ui` may ship **tokens + `cn` + a thin
-re-export surface for plugin runtimes** (e.g. molvis plugins); product apps
-should prefer the registry so they keep local ownership of UI source.
+Optional npm package may later ship **tokens + `cn` + thin re-exports** for
+plugin runtimes; product apps should prefer the registry so they keep local
+ownership of UI source after install.
+
+## What’s in the registry (34 items)
+
+| Kind | Items |
+|------|--------|
+| Foundation | `utils`, `tokens` |
+| Primitives | button, badge, input, label, tabs, tooltip, dialog, dropdown-menu, select, checkbox, separator, scroll-area, popover, slider, card, table, sheet, skeleton, textarea, alert-dialog, accordion, collapsible, context-menu, switch, empty-state, code, number-field, progress-spinner, resizable, command |
+| Blocks | `settings-section`, `settings-shell` |
+
+### CSS: extract constitution, not brand
+
+`tokens` ships the shared **constitution** (type scale, radius, control geometry,
+motion, status roles, semantic slots). Product brand palettes (`--molexp-*`,
+`--molvis-*`) stay in product repos and rebind `--accent` / surfaces.
+
+### Plugin UI: no Cell type
+
+`molvis/plugin/src/ui` is only **button / checkbox / select**. Those three are
+in this registry. There is no separate “plugin cell” primitive; table cells
+live under `table`. Plugin package API stays for runtime; sources converge here.
+
+See [docs/extraction-matrix.md](docs/extraction-matrix.md) for the full matrix.
 
 ## Spec
 
@@ -28,9 +50,9 @@ should prefer the registry so they keep local ownership of UI source.
 
 ```bash
 cd ~/work/molcrafts/molcrafts-ui
-pnpm install
-pnpm build:registry   # writes public/r/*.json
-pnpm dev:registry     # optional static server for /r
+npm install
+npm run build:registry   # writes public/r/*.json
+npm run dev:registry     # optional static server for /r
 ```
 
 ## Product consumers
@@ -51,5 +73,5 @@ Until hosted, use a local path or GitHub raw URL during bootstrap.
 
 ## Status
 
-**Scaffold + spec.** v0 component migration is tracked in the acceptance
-criteria; do not treat this package as production-complete until AC-001+ pass.
+**Source migrate complete** (v0 + v1 primitives + Settings blocks + constitution
+CSS). Product rewiring (delete local forks, brand rebind) is a follow-up per repo.

@@ -3,7 +3,7 @@
   "name": "button",
   "type": "registry:ui",
   "title": "Button",
-  "description": "Primary control button (canary extract from molexp/molvis).",
+  "description": "Shared Button primitive (source: molexp/molvis).",
   "dependencies": [
     "@radix-ui/react-slot",
     "class-variance-authority"

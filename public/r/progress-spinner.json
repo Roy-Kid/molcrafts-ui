@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "progress-spinner",
+  "type": "registry:ui",
+  "title": "Progress Spinner",
+  "description": "Shared Progress Spinner primitive (source: molexp/molvis).",
+  "dependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/progress-spinner.tsx",
+      "type": "registry:ui",
+      "content": "/**\n * Essential \"busy / running\" indicator.\n *\n * Pure CSS ring (not a Lucide SVG) so:\n * - macOS Reduce Motion cannot freeze it via layered `* { animation:none }`\n * - React re-renders do not restart a half-drawn SVG stroke animation\n * - transform always applies to a simple block box\n */\n\nimport type { JSX } from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport const ProgressSpinner = ({\n  className,\n  size = \"sm\",\n  label = \"Loading\",\n}: {\n  className?: string;\n  size?: \"sm\" | \"md\";\n  /** Accessible name when the parent does not already label the busy state. */\n  label?: string;\n}): JSX.Element => (\n  <span\n    role=\"status\"\n    aria-label={label}\n    className={cn(\n      \"mol-progress-spinner\",\n      size === \"md\" ? \"mol-progress-spinner-md\" : \"mol-progress-spinner-sm\",\n      className,\n    )}\n  />\n);\n"
+    }
+  ]
+}

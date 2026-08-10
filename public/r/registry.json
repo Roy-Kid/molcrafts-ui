@@ -11,12 +11,167 @@
     {
       "name": "tokens",
       "type": "registry:style",
-      "title": "MolCrafts design tokens"
+      "title": "MolCrafts constitution tokens"
     },
     {
       "name": "button",
       "type": "registry:ui",
       "title": "Button"
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge"
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input"
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label"
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs"
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip"
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog"
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu"
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select"
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox"
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator"
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area"
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover"
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider"
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card"
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table"
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet"
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton"
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea"
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert Dialog"
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion"
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible"
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu"
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch"
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "Empty State"
+    },
+    {
+      "name": "code",
+      "type": "registry:ui",
+      "title": "Code"
+    },
+    {
+      "name": "number-field",
+      "type": "registry:ui",
+      "title": "Number Field"
+    },
+    {
+      "name": "progress-spinner",
+      "type": "registry:ui",
+      "title": "Progress Spinner"
+    },
+    {
+      "name": "resizable",
+      "type": "registry:ui",
+      "title": "Resizable"
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command"
+    },
+    {
+      "name": "settings-section",
+      "type": "registry:block",
+      "title": "Settings Section"
+    },
+    {
+      "name": "settings-shell",
+      "type": "registry:block",
+      "title": "Settings Shell"
     }
   ]
 }

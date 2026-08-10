@@ -1,55 +1,271 @@
 /**
- * MolCrafts shared design tokens (v0 scaffold).
- * Products import this file then override product-only variables if needed.
+ * MolCrafts visual constitution (shared).
  *
- * Naming aligns with molexp/molvis control vocabulary (accent, control radius).
+ * Products import this layer, then define **product brand** variables
+ * (`--molexp-*`, `--molvis-*`, …) and rebind semantic slots (`--accent`,
+ * `--background`, …). Never put product brand hues in this file.
+ *
+ * Layers:
+ *   1. Constitution (this file) — type scale, radius, control geometry,
+ *      motion, status *roles*, semantic color *slots*, progress spinner.
+ *   2. Product palette (product repo) — brand accent, surface ramp.
+ *   3. Product extras (product repo) — chart/inspector spacing, animations.
  */
 
-:root {
-  /* Surfaces */
-  --background: oklch(0.99 0 0);
-  --foreground: oklch(0.2 0 0);
+/* ── Semantic slots + status + motion (products may rebind) ── */
+
+:where(:root, :host) {
+  color-scheme: light;
+
+  /* Neutral semantic slots — products rebind brand accent/surfaces */
+  --background: oklch(0.985 0.003 255);
+  --foreground: oklch(0.2 0.015 255);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0 0);
-  --muted: oklch(0.96 0 0);
-  --muted-foreground: oklch(0.45 0 0);
-  --accent: oklch(0.55 0.12 264);
-  --accent-foreground: oklch(0.99 0 0);
-  --accent-hover: oklch(0.5 0.12 264);
-  --border: oklch(0.9 0 0);
-  --input: oklch(0.9 0 0);
-  --ring: oklch(0.55 0.12 264);
-  --destructive: oklch(0.55 0.2 25);
-  --destructive-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.96 0 0);
-  --secondary-foreground: oklch(0.25 0 0);
+  --card-foreground: oklch(0.2 0.015 255);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.015 255);
+  --muted: oklch(0.945 0.008 255);
+  --muted-foreground: oklch(0.46 0.018 255);
+  --subtle-foreground: oklch(0.52 0.016 255);
+  --border: oklch(0.89 0.012 255);
+  --input: oklch(0.89 0.012 255);
+  --secondary: oklch(0.965 0.006 255);
+  --secondary-foreground: oklch(0.2 0.015 255);
+  --interactive: oklch(0.94 0.01 255);
+  --interactive-foreground: oklch(0.2 0.015 255);
+  /* Scaffold accent (neutral blue). Products MUST rebind to brand. */
+  --accent: oklch(0.55 0.12 250);
+  --accent-hover: oklch(0.5 0.12 250);
+  --accent-foreground: oklch(0.985 0.003 255);
+  --ring: var(--accent);
+  --overlay-scrim: oklch(0.12 0.01 255 / 50%);
+  --shadow-overlay: 0 0.75rem 2rem oklch(0.12 0.01 255 / 18%);
 
-  /* Radius / control (products map to h-control utilities) */
-  --radius: 0.5rem;
-  --radius-control: 0.375rem;
+  /* Fixed MolCrafts status vocabulary (roles, not brand) */
+  --status-draft: oklch(0.65 0.01 255);
+  --status-ready: oklch(0.58 0.02 255);
+  --status-queued: oklch(0.62 0.04 250);
+  --status-running: oklch(0.62 0.15 250);
+  --status-completed: oklch(0.6 0.13 150);
+  --status-failed: oklch(0.58 0.19 25);
+  --status-failed-hover: oklch(0.54 0.19 25);
+  --status-cancelled: oklch(0.6 0.008 255);
+  --status-cached: oklch(0.6 0.06 300);
+  --status-warning: oklch(0.72 0.14 85);
 
-  /* Status (placeholders — v1 aligns exact product values) */
-  --status-running: oklch(0.55 0.12 250);
-  --status-succeeded: oklch(0.55 0.14 150);
-  --status-failed: oklch(0.55 0.2 25);
-  --status-warning: oklch(0.7 0.14 80);
+  --status-ready-foreground: oklch(0.4 0.02 255);
+  --status-running-foreground: oklch(0.45 0.14 250);
+  --status-completed-foreground: oklch(0.42 0.11 150);
+  --status-failed-foreground: oklch(0.52 0.18 25);
+  --status-warning-foreground: oklch(0.43 0.11 85);
+
+  --status-running-soft: color-mix(in oklab, var(--status-running) 14%, var(--card));
+  --status-completed-soft: color-mix(in oklab, var(--status-completed) 14%, var(--card));
+  --status-failed-soft: color-mix(in oklab, var(--status-failed) 12%, var(--card));
+  --status-warning-soft: color-mix(in oklab, var(--status-warning) 16%, var(--card));
+
+  /* Semantic aliases used by primitives */
+  --destructive: var(--status-failed);
+  --destructive-foreground: oklch(0.985 0.003 255);
+  --success: var(--status-completed);
+  --success-foreground: var(--status-completed-foreground);
+  --success-soft: var(--status-completed-soft);
+  --warning: var(--status-warning);
+  --warning-foreground: var(--status-warning-foreground);
+  --warning-soft: var(--status-warning-soft);
+  --info: var(--status-running);
+  --info-foreground: var(--status-running-foreground);
+  --info-soft: var(--status-running-soft);
+
+  /* Motion */
+  --motion-fast: 120ms;
+  --motion-base: 150ms;
+  --motion-slow: 180ms;
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+  --motion-progress-spin: 850ms;
+  --motion-progress-pulse: 1200ms;
+  --ease-standard: var(--motion-ease);
+  --default-transition-duration: var(--motion-base);
+  --default-transition-timing-function: var(--motion-ease);
 }
 
-.dark {
-  --background: oklch(0.16 0 0);
-  --foreground: oklch(0.95 0 0);
-  --card: oklch(0.2 0 0);
-  --card-foreground: oklch(0.95 0 0);
-  --muted: oklch(0.24 0 0);
-  --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.65 0.12 264);
-  --accent-foreground: oklch(0.12 0 0);
-  --accent-hover: oklch(0.7 0.12 264);
-  --border: oklch(0.3 0 0);
-  --input: oklch(0.3 0 0);
-  --ring: oklch(0.65 0.12 264);
-  --destructive: oklch(0.55 0.18 25);
-  --destructive-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.24 0 0);
-  --secondary-foreground: oklch(0.95 0 0);
+.dark,
+:where(:root, :host).dark {
+  color-scheme: dark;
+
+  --background: oklch(0.16 0.008 255);
+  --foreground: oklch(0.93 0.01 255);
+  --card: oklch(0.2 0.01 255);
+  --card-foreground: oklch(0.93 0.01 255);
+  --popover: oklch(0.2 0.01 255);
+  --popover-foreground: oklch(0.93 0.01 255);
+  --muted: oklch(0.24 0.01 255);
+  --muted-foreground: oklch(0.68 0.015 255);
+  --subtle-foreground: oklch(0.6 0.014 255);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --secondary: oklch(0.23 0.01 255);
+  --secondary-foreground: oklch(0.93 0.01 255);
+  --interactive: oklch(0.26 0.012 255);
+  --interactive-foreground: oklch(0.93 0.01 255);
+  --accent: oklch(0.72 0.12 250);
+  --accent-hover: oklch(0.76 0.12 250);
+  --accent-foreground: oklch(0.16 0.02 250);
+  --ring: var(--accent);
+  --overlay-scrim: oklch(0.04 0.01 255 / 66%);
+  --shadow-overlay: 0 0.75rem 2rem oklch(0.04 0.01 255 / 46%);
+  --destructive-foreground: oklch(0.985 0.003 255);
+
+  --status-ready-foreground: oklch(0.78 0.02 255);
+  --status-running-foreground: oklch(0.76 0.13 250);
+  --status-completed-foreground: oklch(0.74 0.12 150);
+  --status-failed-foreground: oklch(0.73 0.16 25);
+  --status-failed-hover: oklch(0.64 0.18 25);
+  --status-warning-foreground: oklch(0.8 0.12 85);
+}
+
+/*
+ * Tailwind v4 @theme — concrete constitution values + semantic color mapping.
+ * Products that already ship a full @theme should either:
+ *   (a) drop their duplicate type/radius/control keys and import this file, or
+ *   (b) keep product @theme and only take the :root status/motion sections.
+ * Do not import two conflicting @theme blocks for the same keys.
+ */
+@theme inline {
+  /* Typography */
+  --font-sans: "Geist", "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1.4;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.4;
+  --text-body: 0.8125rem;
+  --text-body--line-height: 1.4;
+  --text-body-lg: 0.875rem;
+  --text-body-lg--line-height: 1.5;
+  --text-title: 1rem;
+  --text-title--line-height: 1.4;
+  --text-heading: 1.25rem;
+  --text-heading--line-height: 1.4;
+  --text-display: 1.5rem;
+  --text-display--line-height: 1.4;
+
+  /* Semantic colors → CSS slots (products rebind the slots) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle-foreground: var(--subtle-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-interactive: var(--interactive);
+  --color-interactive-foreground: var(--interactive-foreground);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-primary: var(--accent);
+  --color-primary-foreground: var(--accent-foreground);
+  --color-ring: var(--ring);
+  --color-overlay-scrim: var(--overlay-scrim);
+
+  --color-status-draft: var(--status-draft);
+  --color-status-ready: var(--status-ready);
+  --color-status-queued: var(--status-queued);
+  --color-status-running: var(--status-running);
+  --color-status-completed: var(--status-completed);
+  --color-status-failed: var(--status-failed);
+  --color-status-failed-hover: var(--status-failed-hover);
+  --color-status-cancelled: var(--status-cancelled);
+  --color-status-cached: var(--status-cached);
+  --color-status-warning: var(--status-warning);
+  --color-status-ready-foreground: var(--status-ready-foreground);
+  --color-status-running-foreground: var(--status-running-foreground);
+  --color-status-completed-foreground: var(--status-completed-foreground);
+  --color-status-failed-foreground: var(--status-failed-foreground);
+  --color-status-warning-foreground: var(--status-warning-foreground);
+  --color-status-running-soft: var(--status-running-soft);
+  --color-status-completed-soft: var(--status-completed-soft);
+  --color-status-failed-soft: var(--status-failed-soft);
+  --color-status-warning-soft: var(--status-warning-soft);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-soft: var(--warning-soft);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-info-soft: var(--info-soft);
+
+  /* Radius — control 6 / panel 8 / overlay 10 */
+  --radius-control: 0.375rem;
+  --radius-panel: 0.5rem;
+  --radius-overlay: 0.625rem;
+  --radius-checkbox: 0.1875rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.625rem;
+
+  /* Control geometry (4px grid) */
+  --spacing-control-compact: 1.75rem;
+  --spacing-control: 2rem;
+  --spacing-control-comfortable: 2.25rem;
+  --spacing-toolbar-compact: 2.5rem;
+  --spacing-toolbar: 2.75rem;
+  --spacing-statusbar: 1.75rem;
+  --spacing-touch-target: 2.75rem;
+  --spacing-menu: 8rem;
+  --spacing-dialog-sm: 24rem;
+  --spacing-dialog-md: 30rem;
+  --spacing-dialog-lg: 34rem;
+  --spacing-dialog-scroll: 80vh;
+  --spacing-overlay-viewport: calc(100% - 2rem);
+
+  --shadow-overlay: 0 0.75rem 2rem oklch(0.12 0.01 255 / 18%);
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Progress spinner (progress-spinner.tsx) — pure CSS ring */
+@keyframes mol-progress-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mol-progress-spinner {
+  display: inline-block;
+  border-radius: 9999px;
+  border-style: solid;
+  border-color: color-mix(in oklab, var(--status-running) 28%, transparent);
+  border-top-color: var(--status-running);
+  animation: mol-progress-spin var(--motion-progress-spin) linear infinite;
+}
+
+.mol-progress-spinner-sm {
+  width: 0.875rem;
+  height: 0.875rem;
+  border-width: 2px;
+}
+
+.mol-progress-spinner-md {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-width: 2.5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mol-progress-spinner {
+    animation-duration: 1.6s;
+  }
 }

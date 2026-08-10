@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "code",
+  "type": "registry:ui",
+  "title": "Code",
+  "description": "Shared Code primitive (source: molexp/molvis).",
+  "dependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/code.tsx",
+      "type": "registry:ui",
+      "content": "import type * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nfunction Code({ className, ...props }: React.ComponentProps<\"code\">) {\n  return (\n    <code\n      data-slot=\"code\"\n      className={cn(\"relative rounded-control bg-muted px-1 font-mono font-medium\", className)}\n      {...props}\n    />\n  );\n}\n\nexport { Code };\n"
+    }
+  ]
+}

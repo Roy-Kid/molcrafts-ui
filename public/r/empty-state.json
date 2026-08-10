@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty-state",
+  "type": "registry:ui",
+  "title": "Empty State",
+  "description": "Shared Empty State primitive (source: molexp/molvis).",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/components/ui/empty-state.tsx",
+      "type": "registry:ui",
+      "content": "import type { JSX, ReactNode } from \"react\";\n\nexport type EmptyStateDensity = \"default\" | \"compact\" | \"inline\";\n\nexport interface EmptyStateProps {\n  title: string;\n  description?: string;\n  action?: ReactNode;\n  icon?: ReactNode;\n  density?: EmptyStateDensity;\n  className?: string;\n}\n\nconst CONTAINER: Record<EmptyStateDensity, string> = {\n  default: \"flex flex-col items-center gap-2 py-8 text-center\",\n  compact: \"flex flex-col items-center gap-2 px-3 py-6 text-center\",\n  inline: \"px-2 py-1 text-left\",\n};\n\nconst TITLE: Record<EmptyStateDensity, string> = {\n  default: \"text-sm text-muted-foreground\",\n  compact: \"text-xs text-muted-foreground\",\n  inline: \"text-xs text-muted-foreground\",\n};\n\nconst DESCRIPTION: Record<EmptyStateDensity, string> = {\n  default: \"text-label text-subtle-foreground\",\n  compact: \"text-micro text-subtle-foreground\",\n  inline: \"text-micro text-subtle-foreground\",\n};\n\n/** Empty placeholder with density variants tuned for the viewer inspector. */\nexport const EmptyState = ({\n  title,\n  description,\n  action,\n  icon,\n  density = \"default\",\n  className,\n}: EmptyStateProps): JSX.Element => {\n  return (\n    <div className={[CONTAINER[density], className].filter(Boolean).join(\" \")}>\n      {icon && <div className=\"text-subtle-foreground\">{icon}</div>}\n      <p className={TITLE[density]}>{title}</p>\n      {description && <p className={DESCRIPTION[density]}>{description}</p>}\n      {action && <div className=\"mt-2\">{action}</div>}\n    </div>\n  );\n};\n"
+    }
+  ]
+}

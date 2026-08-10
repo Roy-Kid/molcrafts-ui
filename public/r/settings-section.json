@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "settings-section",
+  "type": "registry:block",
+  "title": "Settings Section",
+  "description": "SettingsSection + SettingsRow — domain-free settings chrome.",
+  "dependencies": [],
+  "registryDependencies": [
+    "utils",
+    "tooltip"
+  ],
+  "files": [
+    {
+      "path": "src/components/blocks/settings-section.tsx",
+      "type": "registry:block",
+      "content": "/**\n * Settings section primitives (SettingsSection + SettingsRow).\n *\n * Domain-free block — shared via molcrafts-ui registry.\n */\n\nimport type { ReactNode } from \"react\";\nimport { Tooltip, TooltipContent, TooltipTrigger } from \"@/components/ui/tooltip\";\nimport { cn } from \"@/lib/utils\";\n\ninterface SettingsSectionProps {\n  /** Anchor id for left-nav scroll targets. */\n  id?: string;\n  title: string;\n  /** Right of the title (status badge, count, …). */\n  trailing?: ReactNode;\n  children: ReactNode;\n  className?: string;\n  description?: ReactNode;\n}\n\n/**\n * Functional group inside Settings — title chrome + content stack.\n */\nexport function SettingsSection({\n  id,\n  title,\n  trailing,\n  children,\n  className,\n  description,\n}: SettingsSectionProps): JSX.Element {\n  return (\n    <section\n      id={id}\n      className={cn(\"scroll-mt-3 space-y-3\", className)}\n      data-settings-section={id}\n    >\n      <header className=\"space-y-1\">\n        <div className=\"flex items-center justify-between gap-2\">\n          <h3 className=\"text-sm font-semibold tracking-tight text-foreground\">{title}</h3>\n          {trailing}\n        </div>\n        {description ? (\n          <p className=\"text-micro text-muted-foreground\">{description}</p>\n        ) : null}\n      </header>\n      <div className=\"space-y-2.5\">{children}</div>\n    </section>\n  );\n}\n\n/** One labeled control row used across settings sections. */\nexport function SettingsRow({\n  label,\n  htmlFor,\n  children,\n  className,\n  tooltip,\n}: {\n  label: ReactNode;\n  htmlFor?: string;\n  children: ReactNode;\n  className?: string;\n  tooltip?: ReactNode;\n}): JSX.Element {\n  const row = (\n    <div\n      className={cn(\n        \"flex min-h-control-compact items-center justify-between gap-3 rounded-control px-0.5\",\n        className,\n      )}\n    >\n      <label htmlFor={htmlFor} className=\"shrink-0 text-micro text-muted-foreground\">\n        {label}\n      </label>\n      <div className=\"flex min-w-0 flex-wrap items-center justify-end gap-2\">{children}</div>\n    </div>\n  );\n\n  if (!tooltip) return row;\n  return (\n    <Tooltip delayDuration={1000}>\n      <TooltipTrigger asChild>{row}</TooltipTrigger>\n      <TooltipContent side=\"left\">{tooltip}</TooltipContent>\n    </Tooltip>\n  );\n}\n"
+    }
+  ]
+}

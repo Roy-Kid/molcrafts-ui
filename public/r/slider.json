@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider",
+  "type": "registry:ui",
+  "title": "Slider",
+  "description": "Shared Slider primitive (source: molexp/molvis).",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/slider.tsx",
+      "type": "registry:ui",
+      "content": "import { Slider as SliderPrimitive } from \"radix-ui\";\nimport type * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nfunction Slider({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Root>) {\n  return (\n    <SliderPrimitive.Root\n      data-slot=\"slider\"\n      className={cn(\"relative flex w-full touch-none select-none items-center\", className)}\n      {...props}\n    >\n      <SliderPrimitive.Track\n        data-slot=\"slider-track\"\n        className=\"relative h-1 w-full grow overflow-hidden rounded-full bg-accent/20\"\n      >\n        <SliderPrimitive.Range data-slot=\"slider-range\" className=\"absolute h-full bg-accent\" />\n      </SliderPrimitive.Track>\n      <SliderPrimitive.Thumb\n        data-slot=\"slider-thumb\"\n        className=\"block size-4 rounded-full border border-accent bg-background outline-none ring-ring/50 transition-colors duration-(--motion-fast) ease-standard hover:ring-2 focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50\"\n      />\n    </SliderPrimitive.Root>\n  );\n}\n\nexport { Slider };\n"
+    }
+  ]
+}

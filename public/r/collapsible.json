@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "collapsible",
+  "type": "registry:ui",
+  "title": "Collapsible",
+  "description": "Shared Collapsible primitive (source: molexp/molvis).",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/collapsible.tsx",
+      "type": "registry:ui",
+      "content": "import { ChevronDown } from \"lucide-react\";\nimport { Collapsible as CollapsiblePrimitive } from \"radix-ui\";\nimport type * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nfunction Collapsible(props: React.ComponentProps<typeof CollapsiblePrimitive.Root>) {\n  return <CollapsiblePrimitive.Root data-slot=\"collapsible\" {...props} />;\n}\n\nfunction CollapsibleTrigger({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof CollapsiblePrimitive.Trigger>) {\n  return (\n    <CollapsiblePrimitive.Trigger\n      data-slot=\"collapsible-trigger\"\n      className={cn(\n        \"group/collapsible inline-flex items-center gap-2 rounded-control text-body font-medium outline-none transition-colors duration-(--motion-fast) ease-standard hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50\",\n        className,\n      )}\n      {...props}\n    >\n      {children}\n      <ChevronDown className=\"size-4 shrink-0 text-muted-foreground transition-transform duration-(--motion-fast) ease-standard group-data-[state=open]/collapsible:rotate-180\" />\n    </CollapsiblePrimitive.Trigger>\n  );\n}\n\nfunction CollapsibleContent({\n  className,\n  ...props\n}: React.ComponentProps<typeof CollapsiblePrimitive.Content>) {\n  return (\n    <CollapsiblePrimitive.Content\n      data-slot=\"collapsible-content\"\n      className={cn(\n        \"overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Collapsible, CollapsibleContent, CollapsibleTrigger };\n"
+    }
+  ]
+}
