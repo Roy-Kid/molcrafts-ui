@@ -116,7 +116,7 @@
         }
       ],
       "dependencies": [
-        "radix-ui",
+        "@radix-ui/react-tabs",
         "class-variance-authority"
       ]
     },
@@ -208,7 +208,7 @@
         }
       ],
       "dependencies": [
-        "radix-ui"
+        "@radix-ui/react-checkbox"
       ]
     },
     {
@@ -280,7 +280,7 @@
         }
       ],
       "dependencies": [
-        "radix-ui"
+        "@radix-ui/react-slider"
       ]
     },
     {
@@ -414,7 +414,7 @@
         }
       ],
       "dependencies": [
-        "radix-ui"
+        "@radix-ui/react-collapsible"
       ]
     },
     {
@@ -432,7 +432,7 @@
         }
       ],
       "dependencies": [
-        "radix-ui"
+        "@radix-ui/react-context-menu"
       ]
     },
     {

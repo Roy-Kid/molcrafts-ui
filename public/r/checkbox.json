@@ -5,7 +5,7 @@
   "title": "Checkbox",
   "description": "Shared Checkbox primitive (source: molexp/molvis).",
   "dependencies": [
-    "radix-ui"
+    "@radix-ui/react-checkbox"
   ],
   "registryDependencies": [
     "utils"
@@ -14,7 +14,7 @@
     {
       "path": "src/components/ui/checkbox.tsx",
       "type": "registry:ui",
-      "content": "\"use client\";\n\nimport { Check, Minus } from \"lucide-react\";\nimport { Checkbox as CheckboxPrimitive } from \"radix-ui\";\nimport * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nconst Checkbox = React.forwardRef<\n  React.ElementRef<typeof CheckboxPrimitive.Root>,\n  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>\n>(({ className, checked, ...props }, ref) => (\n  <CheckboxPrimitive.Root\n    ref={ref}\n    checked={checked}\n    data-slot=\"checkbox\"\n    className={cn(\n      \"peer relative size-4 shrink-0 rounded-checkbox border border-input bg-transparent outline-none transition-colors duration-(--motion-fast) ease-standard\",\n      \"focus-visible:ring-2 focus-visible:ring-ring/50\",\n      \"disabled:cursor-not-allowed disabled:opacity-50\",\n      \"data-[state=checked]:border-accent data-[state=checked]:bg-accent data-[state=checked]:text-accent-foreground\",\n      \"data-[state=indeterminate]:border-accent data-[state=indeterminate]:bg-accent data-[state=indeterminate]:text-accent-foreground\",\n      className,\n    )}\n    {...props}\n  >\n    <CheckboxPrimitive.Indicator className=\"flex items-center justify-center text-current\">\n      {checked === \"indeterminate\" ? <Minus className=\"size-3\" /> : <Check className=\"size-3\" />}\n    </CheckboxPrimitive.Indicator>\n  </CheckboxPrimitive.Root>\n));\nCheckbox.displayName = CheckboxPrimitive.Root.displayName;\n\nexport { Checkbox };\n"
+      "content": "\"use client\";\n\nimport { Check, Minus } from \"lucide-react\";\nimport * as CheckboxPrimitive from \"@radix-ui/react-checkbox\";\nimport * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nconst Checkbox = React.forwardRef<\n  React.ElementRef<typeof CheckboxPrimitive.Root>,\n  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>\n>(({ className, checked, ...props }, ref) => (\n  <CheckboxPrimitive.Root\n    ref={ref}\n    checked={checked}\n    data-slot=\"checkbox\"\n    className={cn(\n      \"peer relative size-4 shrink-0 rounded-checkbox border border-input bg-transparent outline-none transition-colors duration-(--motion-fast) ease-standard\",\n      \"focus-visible:ring-2 focus-visible:ring-ring/50\",\n      \"disabled:cursor-not-allowed disabled:opacity-50\",\n      \"data-[state=checked]:border-accent data-[state=checked]:bg-accent data-[state=checked]:text-accent-foreground\",\n      \"data-[state=indeterminate]:border-accent data-[state=indeterminate]:bg-accent data-[state=indeterminate]:text-accent-foreground\",\n      className,\n    )}\n    {...props}\n  >\n    <CheckboxPrimitive.Indicator className=\"flex items-center justify-center text-current\">\n      {checked === \"indeterminate\" ? <Minus className=\"size-3\" /> : <Check className=\"size-3\" />}\n    </CheckboxPrimitive.Indicator>\n  </CheckboxPrimitive.Root>\n));\nCheckbox.displayName = CheckboxPrimitive.Root.displayName;\n\nexport { Checkbox };\n"
     }
   ]
 }

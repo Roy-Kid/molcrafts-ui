@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "build:registry": "node scripts/build-registry.mjs",
+    "sync:products": "node scripts/sync-to-products.mjs",
     "dev:registry": "npx --yes serve public -p 4177",
     "typecheck": "tsc --noEmit"
   },

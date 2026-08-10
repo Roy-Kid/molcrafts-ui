@@ -103,12 +103,19 @@ Sources: molexp `components/ui/*` primary; molvis-only adds `switch`, `empty-sta
 
 ---
 
-## Product rewire (not done in this migrate)
+## Product rewire (done 2026-08-10)
 
-1. Point product `components.json` registries at molcrafts-ui.
-2. `shadcn add` (or copy) and delete local duplicates over time.
-3. molexp/molvis: slim `tailwind.css` to product palette + import constitution.
-4. molvis plugin: keep package exports; optionally sync sources from registry.
+1. **components.json** — molexp/ui, molvis/page, molvis/plugin register `@molcrafts` → `file:../../../molcrafts-ui/public/r/{name}.json`
+2. **Sources synced** via `npm run sync:products` (registry → product local files; products still own the tree)
+3. **CSS** — products import vendored `constitution-theme.css` + `constitution-base.css`; brand palette stays product-local
+4. **molvis plugin** — button/checkbox/select + utils synced; package export path unchanged
+5. **Stay product-owned** — molexp confirm-dialog/tree/markdown/toast/…; molvis page `resizable` (different panel API)
+
+Re-sync after registry edits:
+
+```bash
+cd ~/work/molcrafts/molcrafts-ui && npm run build:registry && npm run sync:products
+```
 
 ---
 
