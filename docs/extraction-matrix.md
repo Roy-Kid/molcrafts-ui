@@ -103,13 +103,14 @@ Sources: molexp `components/ui/*` primary; molvis-only adds `switch`, `empty-sta
 
 ---
 
-## Product rewire (done 2026-08-10)
+## Product rewire (done — molexp + molvis + molhub)
 
-1. **components.json** — molexp/ui, molvis/page, molvis/plugin register `@molcrafts` → `file:../../../molcrafts-ui/public/r/{name}.json`
-2. **Sources synced** via `npm run sync:products` (registry → product local files; products still own the tree)
+1. **components.json** — molexp/ui, molvis/page, molvis/plugin, molhub/apps/web register `@molcrafts` → local `file:…/molcrafts-ui/public/r/{name}.json`
+2. **Sources synced** via `npm run sync:products` (registry → product local files)
 3. **CSS** — products import vendored `constitution-theme.css` + `constitution-base.css`; brand palette stays product-local
 4. **molvis plugin** — button/checkbox/select + utils synced; package export path unchanged
-5. **Stay product-owned** — molexp confirm-dialog/tree/markdown/toast/…; molvis page `resizable` (different panel API)
+5. **molhub** — button/code/empty-state/tooltip + utils + constitution; **product-owned**: badge (`BadgeTone`), input (search density), tabs (line-default)
+6. **Stay product-owned** — molexp confirm-dialog/tree/markdown/toast/…; molvis page `resizable` (panel API)
 
 Re-sync after registry edits:
 

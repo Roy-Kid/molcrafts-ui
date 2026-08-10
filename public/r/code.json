@@ -12,7 +12,7 @@
     {
       "path": "src/components/ui/code.tsx",
       "type": "registry:ui",
-      "content": "import type * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nfunction Code({ className, ...props }: React.ComponentProps<\"code\">) {\n  return (\n    <code\n      data-slot=\"code\"\n      className={cn(\"relative rounded-control bg-muted px-1 font-mono font-medium\", className)}\n      {...props}\n    />\n  );\n}\n\nexport { Code };\n"
+      "content": "import { cva, type VariantProps } from \"class-variance-authority\";\nimport type * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\n/**\n * Mono text for machine syntax (coordinates, digests, paths).\n * `inline` for prose/table cells; `block` for copyable multi-line blobs.\n */\nconst codeVariants = cva(\"rounded-control bg-muted font-mono text-foreground\", {\n  variants: {\n    variant: {\n      inline: \"px-1 py-px font-medium\",\n      block: \"block w-full overflow-x-auto px-2 py-1.5\",\n    },\n    wrap: {\n      none: \"whitespace-nowrap\",\n      anywhere: \"[overflow-wrap:anywhere]\",\n    },\n  },\n  defaultVariants: {\n    variant: \"inline\",\n    wrap: \"none\",\n  },\n});\n\nfunction Code({\n  className,\n  variant,\n  wrap,\n  ...props\n}: React.ComponentProps<\"code\"> & VariantProps<typeof codeVariants>) {\n  return (\n    <code data-slot=\"code\" className={cn(codeVariants({ variant, wrap }), className)} {...props} />\n  );\n}\n\nexport { Code, codeVariants };\n"
     }
   ]
 }

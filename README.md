@@ -73,10 +73,10 @@ Until hosted, use a local path or GitHub raw URL during bootstrap.
 
 ## Status
 
-**Registry + product rewire complete** for molexp UI, molvis page, and molvis
-plugin (local `file:` registry, `sync:products`, constitution CSS import).
+**Registry + product rewire complete** for **molexp**, **molvis** (page + plugin),
+and **molhub** web (local `file:` registry, `sync:products`, constitution CSS).
 
 ```bash
 npm run build:registry
-npm run sync:products   # push sources into sibling molexp / molvis trees
+npm run sync:products   # push sources into sibling molexp / molvis / molhub trees
 ```

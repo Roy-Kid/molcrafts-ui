@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Copy registry sources into sibling product apps (molexp / molvis).
+ * Copy registry sources into sibling product apps (molexp / molvis / molhub).
  *
  * Usage (from molcrafts-ui root):
  *   node scripts/sync-to-products.mjs
@@ -10,6 +10,7 @@
  *     molcrafts-ui/
  *     molexp/
  *     molvis/
+ *     molhub/
  */
 
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
@@ -23,7 +24,8 @@ const srcBlocks = path.join(root, "src/components/blocks");
 const srcLib = path.join(root, "src/lib");
 const srcStyles = path.join(root, "src/styles");
 
-const SHARED_UI = [
+/** Full workbench set (molexp). */
+const MOLEXP_UI = [
   "accordion",
   "alert-dialog",
   "badge",
@@ -56,7 +58,7 @@ const SHARED_UI = [
   "tooltip",
 ];
 
-// page-owned: resizable (usePanelRef + layout API differs from molexp)
+/** molvis page — resizable stays page-owned (usePanelRef API). */
 const MOLVIS_PAGE_UI = [
   "badge",
   "button",
@@ -80,6 +82,13 @@ const MOLVIS_PAGE_UI = [
 
 const PLUGIN_UI = ["button", "checkbox", "select"];
 
+/**
+ * molhub registry web — shared foundation only.
+ * Product-owned: badge (BadgeTone domain vocabulary), input (search density),
+ * tabs (line-default registry chrome). Everything else from the registry.
+ */
+const MOLHUB_UI = ["button", "code", "empty-state", "tooltip"];
+
 async function copy(from, to) {
   await mkdir(path.dirname(to), { recursive: true });
   await copyFile(from, to);
@@ -92,11 +101,22 @@ async function write(to, content) {
   console.log("  →", path.relative(molcrafts, to));
 }
 
+async function vendorConstitution(productStylesDir) {
+  await copy(
+    path.join(srcStyles, "constitution-base.css"),
+    path.join(productStylesDir, "constitution-base.css"),
+  );
+  await copy(
+    path.join(srcStyles, "constitution-theme.css"),
+    path.join(productStylesDir, "constitution-theme.css"),
+  );
+}
+
 async function main() {
   // ── molexp ──────────────────────────────────────────────
   console.log("molexp");
   const molexpUi = path.join(molcrafts, "molexp/ui/src/components/ui");
-  for (const name of SHARED_UI) {
+  for (const name of MOLEXP_UI) {
     await copy(path.join(srcUi, `${name}.tsx`), path.join(molexpUi, `${name}.tsx`));
   }
   await copy(path.join(srcLib, "utils.ts"), path.join(molcrafts, "molexp/ui/src/lib/utils.ts"));
@@ -108,15 +128,7 @@ async function main() {
     path.join(srcBlocks, "settings-section.tsx"),
     path.join(molcrafts, "molexp/ui/src/components/settings/SettingsSection.tsx"),
   );
-  // constitution CSS vendored for stable relative imports
-  await copy(
-    path.join(srcStyles, "constitution-base.css"),
-    path.join(molcrafts, "molexp/ui/src/styles/constitution-base.css"),
-  );
-  await copy(
-    path.join(srcStyles, "constitution-theme.css"),
-    path.join(molcrafts, "molexp/ui/src/styles/constitution-theme.css"),
-  );
+  await vendorConstitution(path.join(molcrafts, "molexp/ui/src/styles"));
 
   // ── molvis page ─────────────────────────────────────────
   console.log("molvis/page");
@@ -125,21 +137,9 @@ async function main() {
     await copy(path.join(srcUi, `${name}.tsx`), path.join(pageUi, `${name}.tsx`));
   }
   await copy(path.join(srcLib, "utils.ts"), path.join(molcrafts, "molvis/page/src/lib/utils.ts"));
-  await copy(
-    path.join(srcStyles, "constitution-base.css"),
-    path.join(molcrafts, "molvis/page/src/styles/constitution-base.css"),
-  );
-  await copy(
-    path.join(srcStyles, "constitution-theme.css"),
-    path.join(molcrafts, "molvis/page/src/styles/constitution-theme.css"),
-  );
-
-  // Settings block → layout (keep molvis path; source from registry)
+  await vendorConstitution(path.join(molcrafts, "molvis/page/src/styles"));
   const section = await readFile(path.join(srcBlocks, "settings-section.tsx"), "utf8");
-  await write(
-    path.join(molcrafts, "molvis/page/src/ui/layout/SettingsSection.tsx"),
-    section,
-  );
+  await write(path.join(molcrafts, "molvis/page/src/ui/layout/SettingsSection.tsx"), section);
 
   // ── molvis plugin ───────────────────────────────────────
   console.log("molvis/plugin");
@@ -149,12 +149,23 @@ async function main() {
     text = text.replaceAll('from "@/lib/utils"', 'from "../utils"');
     await write(path.join(pluginUi, `${name}.tsx`), text);
   }
-  // plugin cn stays self-contained (no host path); use registry utils body
   let utils = await readFile(path.join(srcLib, "utils.ts"), "utf8");
   utils =
     "/**\n * Constitution-aware cn — synced from molcrafts-ui.\n * Keep in sync via: molcrafts-ui `npm run sync:products`.\n */\n" +
     utils;
   await write(path.join(molcrafts, "molvis/plugin/src/utils.ts"), utils);
+
+  // ── molhub web ──────────────────────────────────────────
+  console.log("molhub/apps/web");
+  const hubUi = path.join(molcrafts, "molhub/apps/web/app/src/components/ui");
+  for (const name of MOLHUB_UI) {
+    await copy(path.join(srcUi, `${name}.tsx`), path.join(hubUi, `${name}.tsx`));
+  }
+  await copy(
+    path.join(srcLib, "utils.ts"),
+    path.join(molcrafts, "molhub/apps/web/app/src/lib/utils.ts"),
+  );
+  await vendorConstitution(path.join(molcrafts, "molhub/apps/web/app/src/styles"));
 
   console.log("done");
 }
