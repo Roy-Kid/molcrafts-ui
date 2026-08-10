@@ -1,0 +1,28 @@
+{
+  "name": "@molcrafts/ui-registry",
+  "version": "0.0.1",
+  "private": true,
+  "description": "MolCrafts shared shadcn registry source (molexp / molvis / molhub)",
+  "type": "module",
+  "scripts": {
+    "build:registry": "node scripts/build-registry.mjs",
+    "dev:registry": "npx --yes serve public -p 4177",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.31.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "tailwind-merge": "^3.6.0",
+    "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "packageManager": "npm@11.17.0+sha512.3eeaf18997b11070d313849268b23766b9db0068997dec9471073170fe43fa17f2b4d0337bf0f52330ee2274e7f5754b21b01052742e48f5c9c74d8b1e32ef43"
+}

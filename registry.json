@@ -1,0 +1,46 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "molcrafts",
+  "homepage": "https://github.com/MolCrafts/molcrafts-ui",
+  "items": [
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "cn utility",
+      "description": "clsx + tailwind-merge helper used by all primitives.",
+      "files": [
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": ["clsx", "tailwind-merge"]
+    },
+    {
+      "name": "tokens",
+      "type": "registry:style",
+      "title": "MolCrafts design tokens",
+      "description": "Shared CSS variables for surfaces, controls, and status colors.",
+      "files": [
+        {
+          "path": "src/styles/tokens.css",
+          "type": "registry:style"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Primary control button (canary extract from molexp/molvis).",
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "src/components/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority"]
+    }
+  ]
+}

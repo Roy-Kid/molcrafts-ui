@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "molcrafts",
+  "homepage": "https://github.com/MolCrafts/molcrafts-ui",
+  "items": [
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "cn utility"
+    },
+    {
+      "name": "tokens",
+      "type": "registry:style",
+      "title": "MolCrafts design tokens"
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button"
+    }
+  ]
+}
