@@ -79,12 +79,13 @@ Public package API (`@molcrafts/molvis/plugin/ui`) **stays** as the plugin runti
 
 Sources: molexp `components/ui/*` primary; molvis-only adds `switch`, `empty-state`, `number-field`.
 
-### Blocks (2)
+### Blocks (3)
 
 | Item | Notes |
 |------|-------|
 | `settings-section` | `SettingsSection` + `SettingsRow` |
 | `settings-shell` | left-nav settings shell |
+| `edge-panel` | Pull-from-edge rail (`bottom` / `left` / `right`); drag resize + snap-close; bundles `use-pointer-drag`. molvis bottom workbench uses it; L/R stay product `ViewerSidePanel` (drawer + focus trap + resizable shell). |
 
 ---
 

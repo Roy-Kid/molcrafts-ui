@@ -113,22 +113,25 @@ async function vendorConstitution(productStylesDir) {
 }
 
 async function main() {
-  // ── molexp ──────────────────────────────────────────────
-  console.log("molexp");
-  const molexpUi = path.join(molcrafts, "molexp/ui/src/components/ui");
+  // ── molexp (apps/web — monorepo workbench; was molexp/ui) ──
+  console.log("molexp/apps/web");
+  const molexpUi = path.join(molcrafts, "molexp/apps/web/src/components/ui");
   for (const name of MOLEXP_UI) {
     await copy(path.join(srcUi, `${name}.tsx`), path.join(molexpUi, `${name}.tsx`));
   }
-  await copy(path.join(srcLib, "utils.ts"), path.join(molcrafts, "molexp/ui/src/lib/utils.ts"));
+  await copy(
+    path.join(srcLib, "utils.ts"),
+    path.join(molcrafts, "molexp/apps/web/src/lib/utils.ts"),
+  );
   await copy(
     path.join(srcBlocks, "settings-shell.tsx"),
-    path.join(molcrafts, "molexp/ui/src/components/settings/SettingsShell.tsx"),
+    path.join(molcrafts, "molexp/apps/web/src/components/settings/SettingsShell.tsx"),
   );
   await copy(
     path.join(srcBlocks, "settings-section.tsx"),
-    path.join(molcrafts, "molexp/ui/src/components/settings/SettingsSection.tsx"),
+    path.join(molcrafts, "molexp/apps/web/src/components/settings/SettingsSection.tsx"),
   );
-  await vendorConstitution(path.join(molcrafts, "molexp/ui/src/styles"));
+  await vendorConstitution(path.join(molcrafts, "molexp/apps/web/src/styles"));
 
   // ── molvis page ─────────────────────────────────────────
   console.log("molvis/page");
@@ -140,6 +143,16 @@ async function main() {
   await vendorConstitution(path.join(molcrafts, "molvis/page/src/styles"));
   const section = await readFile(path.join(srcBlocks, "settings-section.tsx"), "utf8");
   await write(path.join(molcrafts, "molvis/page/src/ui/layout/SettingsSection.tsx"), section);
+  // Edge rail (bottom pull-up / future L-R). molvis already has usePointerDrag.
+  let edgePanel = await readFile(path.join(srcBlocks, "edge-panel.tsx"), "utf8");
+  edgePanel = edgePanel.replaceAll(
+    'from "@/hooks/use-pointer-drag"',
+    'from "@/hooks/usePointerDrag"',
+  );
+  await write(
+    path.join(molcrafts, "molvis/page/src/components/viewer/EdgePanel.tsx"),
+    edgePanel,
+  );
 
   // ── molvis plugin ───────────────────────────────────────
   console.log("molvis/plugin");

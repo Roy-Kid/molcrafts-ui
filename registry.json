@@ -581,6 +581,25 @@
           "type": "registry:block"
         }
       ]
+    },
+    {
+      "name": "edge-panel",
+      "type": "registry:block",
+      "title": "Edge Panel",
+      "description": "Pull-from-edge rail panel (bottom / left / right) with drag resize and snap-close — workbench isomorphic bottom + side rails.",
+      "registryDependencies": [
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "src/hooks/use-pointer-drag.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/components/blocks/edge-panel.tsx",
+          "type": "registry:block"
+        }
+      ]
     }
   ]
 }

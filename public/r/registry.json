@@ -172,6 +172,11 @@
       "name": "settings-shell",
       "type": "registry:block",
       "title": "Settings Shell"
+    },
+    {
+      "name": "edge-panel",
+      "type": "registry:block",
+      "title": "Edge Panel"
     }
   ]
 }
