@@ -1,6 +1,7 @@
 name: test
 
-# Same jobs in every context; see "CI" in README.md.
+# Same jobs in both tiers (`test / tier` decides; see "CI" in README.md):
+# the registry build is the whole suite.
 on:
   push:
     branches: ["**"]
@@ -12,19 +13,30 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'push' && !contains(fromJSON('["refs/heads/dev","refs/heads/master","refs/heads/main"]'), github.ref) }}
+  group: test-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ !contains(fromJSON('["refs/heads/dev","refs/heads/master","refs/heads/main"]'), github.ref) && !startsWith(github.ref, 'refs/tags/') }}
 
 jobs:
+  tier:
+    name: test / tier
+    # A pull request inside a fork was already run, full tier, by its push.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository || github.repository_owner == 'MolCrafts'
+    runs-on: ubuntu-latest
+    outputs:
+      full: ${{ steps.tier.outputs.full }}
+    steps:
+      - id: tier
+        run: echo "full=${{ github.repository_owner != 'MolCrafts' || contains(fromJSON('["dev","master","main"]'), github.ref_name) || github.event_name != 'push' || startsWith(github.ref, 'refs/tags/') }}" | tee -a "$GITHUB_OUTPUT"
+
   # public/r/ is committed (products `shadcn add` from it), so it must be
   # exactly what build:registry makes from registry.json and src/.
   registry:
     name: test / registry
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    needs: tier
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup-node
+      - uses: MolCrafts/molcrafts-ci/actions/setup-node@master
       - run: npm run build:registry
       - name: public/r/ is up to date
         run: git diff --exit-code -- public/r || { echo "::error::public/r/ is stale; run npm run build:registry and commit it"; exit 1; }

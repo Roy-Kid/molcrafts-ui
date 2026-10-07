@@ -1,8 +1,8 @@
 name: lint
 
 # Same jobs in every context (feature branch or dev/main, fork or upstream);
-# see "CI" in README.md. A PR from a branch of the same repository skips what
-# its push already ran.
+# see "CI" in README.md. A pull request inside a fork skips what its push
+# already ran.
 on:
   push:
     branches: ["**"]
@@ -14,15 +14,16 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'push' && !contains(fromJSON('["refs/heads/dev","refs/heads/master","refs/heads/main"]'), github.ref) }}
+  group: lint-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ !contains(fromJSON('["refs/heads/dev","refs/heads/master","refs/heads/main"]'), github.ref) && !startsWith(github.ref, 'refs/tags/') }}
 
 jobs:
   typecheck:
     name: lint / typecheck
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    # A pull request inside a fork was already run by its push.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository || github.repository_owner == 'MolCrafts'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup-node
+      - uses: MolCrafts/molcrafts-ci/actions/setup-node@master
       - run: npm run typecheck
