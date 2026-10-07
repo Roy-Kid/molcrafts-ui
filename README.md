@@ -80,3 +80,14 @@ and **molhub** web (local `file:` registry, `sync:products`, constitution CSS).
 npm run build:registry
 npm run sync:products   # push sources into sibling molexp / molvis / molhub trees
 ```
+
+## CI
+
+| workflow | feature branch (fork or upstream) | dev / main, or a PR into one | upstream only |
+|---|---|---|---|
+| `lint.yml` | `lint / typecheck` (`npm run typecheck`) | same | — |
+| `test.yml` | `test / registry` (`npm run build:registry`; `public/r/` must match) | same | — |
+
+A pull request from a branch of the same repository skips the jobs its push
+already ran. Nothing here is released or deployed; products pull items with
+`sync:products` or `shadcn add`.

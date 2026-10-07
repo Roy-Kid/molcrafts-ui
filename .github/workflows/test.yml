@@ -1,0 +1,32 @@
+name: test
+
+# Same jobs in every context; see "CI" in README.md.
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [dev, master, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'push' && !contains(fromJSON('["refs/heads/dev","refs/heads/master","refs/heads/main"]'), github.ref) }}
+
+jobs:
+  # public/r/ is committed (products `shadcn add` from it), so it must be
+  # exactly what build:registry makes from registry.json and src/.
+  registry:
+    name: test / registry
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup-node
+      - run: npm run build:registry
+      - name: public/r/ is up to date
+        run: git diff --exit-code -- public/r || { echo "::error::public/r/ is stale; run npm run build:registry and commit it"; exit 1; }
+      - name: public/r/ has no untracked items
+        run: test -z "$(git status --porcelain --untracked-files=all -- public/r)"
