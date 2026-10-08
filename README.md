@@ -86,7 +86,7 @@ npm run sync:products   # push sources into sibling molexp / molvis / molhub tre
 | workflow | fast tier (a feature-branch push to MolCrafts) | full tier (every fork push; dev / master / main on MolCrafts; PRs, tags, dispatches) | upstream only |
 |---|---|---|---|
 | `lint.yml` | `lint / typecheck` (`npm run typecheck`) | same | — |
-| `test.yml` | `test / tier`, `test / registry` (`npm run build:registry`; `public/r/` must match) | same | — |
+| `test.yml` | `test / context`, `test / registry` (`npm run build:registry`; `public/r/` must match) | same | — |
 
 A pull request inside a fork skips the jobs its push already ran. Shared setup
 is `MolCrafts/molcrafts-ci/actions/<name>@master`. Nothing here is released or deployed; products pull items with
